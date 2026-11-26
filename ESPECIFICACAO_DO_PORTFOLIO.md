@@ -1,5 +1,7 @@
 # Portfólio de Lucas Sena
 
+Para retomar o trabalho, consulte o [contexto do projeto](CONTEXTO_PORTFOLIO.md). Os links para o retrato e para os design systems extraídos apontam para materiais da pasta de trabalho local.
+
 ## Direção do site
 
 O portfólio será uma página de rolagem vertical. Quem entrar verá primeiro um detalhe pessoal, o relógio de Lucas. O enquadramento se abre, apresenta o rosto e dá acesso direto aos projetos. Mais abaixo, a academia introduz o Skiros, aplicativo de treino para uso pessoal e último projeto antes do contato.
