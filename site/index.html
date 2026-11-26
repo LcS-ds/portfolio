@@ -7,7 +7,9 @@
     <meta name="description" content="Portfólio de Lucas Sena, estudante de Desenvolvimento de Sistemas. Conheça meus projetos para web e o aplicativo de treino Skiros.">
     <title>Portfólio de Lucas Sena</title>
     <link rel="stylesheet" href="./portfolio.css">
+    <link rel="stylesheet" href="./skiros-transition.css">
     <script type="module" src="./navigation.js"></script>
+    <script type="module" src="./skiros-transition.js"></script>
   </head>
   <body>
     <a class="skip" href="#inicio">Pular para o conteúdo</a>
@@ -93,11 +95,16 @@
         </div>
       </section>
 
-      <section id="academia" class="section wrap gym" aria-labelledby="academia-titulo">
-        <h2 id="academia-titulo">Além do código</h2>
-        <img src="./assets/academia.webp" alt="Lucas fotografa o reflexo no espelho com o celular à frente do rosto." loading="lazy" width="1184" height="1328">
-        <p class="lead">A academia faz parte da minha rotina. Entre uma série e outra, eu queria lembrar quanto usei na última vez. Criei o Skiros para ter essa resposta à mão e registrar a série durante o treino.</p>
-      </section>
+      <div class="skiros-transition">
+        <div class="skiros-scene">
+          <section id="academia" class="section wrap gym" aria-labelledby="academia-titulo">
+            <h2 id="academia-titulo">Além do código</h2>
+            <img src="./assets/academia.webp" alt="Lucas fotografa o reflexo no espelho com o celular à frente do rosto." loading="lazy" width="1184" height="1328">
+            <p class="lead">A academia faz parte da minha rotina. Entre uma série e outra, eu queria lembrar quanto usei na última vez. Criei o Skiros para ter essa resposta à mão e registrar a série durante o treino.</p>
+          </section>
+        </div>
+        <canvas class="skiros-particles" aria-hidden="true"></canvas>
+      </div>
       <section id="skiros" class="skiros" aria-labelledby="skiros-titulo" tabindex="-1">
         <div class="wrap">
           <div class="skiros-intro">
