@@ -6,7 +6,7 @@ Textos e materiais para as seções de apresentação, projetos e certificados. 
 
 **Nome** · Lucas Sena
 
-**Linha de abertura** · Estudante da ETEC. Desenvolvo projetos para a web, de catálogos de livros a jogos de corrida.
+**Linha de abertura** · Curso o primeiro ano de Desenvolvimento de Sistemas na ETEC Dra. Maria Augusta Saraiva. Desenvolvo projetos para a web, de catálogos de livros a jogos de corrida.
 
 **Sobre mim** · Gosto de explorar o que dá para fazer no navegador. No Acervo, trabalhei com busca, filtros e armazenamento de dados. No TopSpeed, usei o mesmo ambiente para criar uma corrida em 3D. O que me interessa muda de um projeto para outro, mas sempre começo pelo que a pessoa vai poder fazer na tela.
 
