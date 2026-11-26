@@ -3,12 +3,109 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101010">
+    <meta name="description" content="Portfólio de Lucas Sena, estudante de Desenvolvimento de Sistemas. Conheça meus projetos para web e o aplicativo de treino Skiros.">
     <title>Portfólio de Lucas Sena</title>
+    <link rel="stylesheet" href="./portfolio.css">
+    <script type="module" src="./navigation.js"></script>
   </head>
   <body>
+    <a class="skip" href="#inicio">Pular para o conteúdo</a>
+    <header class="header">
+      <div class="wrap bar">
+        <a class="brand" href="#inicio" aria-label="Lucas Sena, início"><span aria-hidden="true">LS.</span> Lucas Sena</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu <span aria-hidden="true">☰</span></button>
+        <nav id="nav" aria-label="Navegação principal">
+          <a href="#sobre">Sobre</a><a href="#projetos">Projetos</a><a href="#skiros">Skiros</a><a href="#contato">Contato</a>
+        </nav>
+      </div>
+    </header>
     <main>
-      <h1>Portfólio de Lucas Sena</h1>
-      <p>Página de verificação do ambiente de desenvolvimento.</p>
+      <section id="inicio" class="hero wrap" aria-labelledby="nome" tabindex="-1">
+        <div class="hero-text">
+          <h1 id="nome">Lucas<br> Sena<span aria-hidden="true">.</span></h1>
+          <p>Curso o primeiro ano de Desenvolvimento de Sistemas na ETEC Dra. Maria Augusta Saraiva. Desenvolvo projetos para a web, de catálogos de livros a jogos de corrida.</p>
+          <a class="action" href="#projetos">Ver projetos <span aria-hidden="true">↓</span></a>
+        </div>
+        <img class="portrait" src="./assets/lucas-sena.webp" alt="Lucas ajusta a gravata, com o relógio à vista no pulso." width="1024" height="1536" fetchpriority="high">
+      </section>
+
+      <section id="sobre" class="section wrap split" aria-labelledby="sobre-titulo" tabindex="-1">
+        <h2 id="sobre-titulo">Sobre mim</h2>
+        <div>
+          <p class="lead">Gosto de explorar o que dá para fazer no navegador.</p>
+          <p>No Acervo, trabalhei com busca, filtros e armazenamento de dados. No TopSpeed, usei o mesmo ambiente para criar uma corrida em 3D. O que me interessa muda de um projeto para outro, mas sempre começo pelo que a pessoa vai poder fazer na tela.</p>
+          <p class="formation"><strong>Desenvolvimento de Sistemas</strong><br>ETEC Dra. Maria Augusta Saraiva · 1º ano</p>
+        </div>
+      </section>
+
+      <section id="projetos" class="section wrap" aria-labelledby="projetos-titulo" tabindex="-1">
+        <h2 id="projetos-titulo">Projetos</h2>
+        <div class="projects">
+          <article class="project featured">
+            <div class="preview shelf"><img loading="lazy" src="./assets/acervo.webp" width="1300" height="875" alt="Estante com Dom Casmurro, A Hora da Estrela e O Cortiço abaixo da busca e dos filtros."></div>
+            <div class="project-copy">
+              <p class="tech">JavaScript · Supabase</p>
+              <h3>Acervo de Livros</h3>
+              <p>Criei uma estante digital para cadastrar livros, guardar notas e acompanhar o que já li. A busca encontra obras por título ou autor, e os filtros organizam a coleção por etapa da leitura.</p>
+              <a class="text-link" href="https://github.com/LcS-ds/acervo-livros" aria-label="Ver código do Acervo de Livros">Ver código <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="project">
+            <div class="preview race"><img loading="lazy" src="./assets/topspeed.webp" width="1280" height="800" alt="Carro vermelho contorna uma curva iluminada por neon em uma corrida do TopSpeed."></div>
+            <div class="project-copy">
+              <p class="tech">Three.js · Web 3D</p>
+              <h3>TopSpeed</h3>
+              <p>Desenvolvi um jogo de corrida arcade em 3D para o navegador. Quem joga escolhe a pista, o carro e a dificuldade dos adversários antes da largada.</p>
+              <div class="links"><a class="text-link" href="https://lcs-ds.github.io/TopSpeed/">Jogar no navegador <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/LcS-ds/TopSpeed" aria-label="Ver código do TopSpeed">Ver código <span aria-hidden="true">↗</span></a></div>
+            </div>
+          </article>
+          <article class="project">
+            <div class="preview mobile-preview"><img loading="lazy" src="./assets/petlume.webp" width="824" height="1800" alt="Página móvel da PetLume com um cão, um gato e o acesso aos serviços do pet shop."></div>
+            <div class="project-copy">
+              <p class="tech">PWA · Web mobile</p>
+              <h3>PetLume</h3>
+              <p>Desenvolvi o site de um pet shop fictício como projeto escolar. Dá para consultar serviços, experimentar o agendamento pelo celular e instalar o site para acessar o conteúdo offline.</p>
+              <div class="links"><a class="text-link" href="https://lcs-ds.github.io/petlume-pwa/">Abrir demonstração <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/LcS-ds/petlume-pwa" aria-label="Ver código do PetLume">Ver código <span aria-hidden="true">↗</span></a></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="certificados" class="section wrap split" aria-labelledby="certificados-titulo">
+        <h2 id="certificados-titulo">Certificados<br>e estudos</h2>
+        <div class="credentials">
+          <ul>
+            <li><a href="%BASE_URL%escola-de-inovadores.pdf"><strong>Escola de Inovadores · 21ª edição</strong><small>INOVA CPS · Participação · 50 h · 24/11/2026</small><span aria-hidden="true">↗</span></a></li>
+            <li><a href="%BASE_URL%fundamentos-da-ia-moderna.pdf"><strong>Fundamentos da IA Moderna: Machine Learning, LLMs, IA Generativa e Agentes</strong><small>DIO · 2 h · 21/11/2026</small><span aria-hidden="true">↗</span></a></li>
+          </ul>
+          <details>
+            <summary>Outros certificados (6)</summary>
+            <ul>
+              <li><a href="%BASE_URL%engenharia-de-prompts.pdf"><strong>Introdução à Engenharia de Prompts</strong><small>DIO · 1 h · 22/11/2026</small><span aria-hidden="true">↗</span></a></li>
+              <li><a href="%BASE_URL%estudos-e-carreira-com-ia.pdf"><strong>Potencializando Seus Estudos e Carreira com IA (Chatbots, Copilotos e Agentes)</strong><small>DIO · 2 h · 22/11/2026</small><span aria-hidden="true">↗</span></a></li>
+              <li><a href="%BASE_URL%dio-agent.pdf"><strong>DIO Agent: Nunca Mais Estude Sozinho</strong><small>DIO · 1 h · 22/11/2026</small><span aria-hidden="true">↗</span></a></li>
+              <li><a href="%BASE_URL%economia-ja.pdf"><strong>Economia, Já!</strong><small>Junior Achievement · Participação · 5 h · 22/10/2026</small><span aria-hidden="true">↗</span></a></li>
+              <li><a href="%BASE_URL%boas-vindas-bootcamp-santander.pdf"><strong>Boas-vindas ao Bootcamp Santander Cibersegurança do Zero à Prática</strong><small>DIO / Santander · Atividade de abertura · 1 h · 20/11/2026</small><span aria-hidden="true">↗</span></a></li>
+              <li><a href="%BASE_URL%boas-vindas-aceleracao-santander.pdf"><strong>Boas-vindas à Aceleração Santander — Cibersegurança do Zero à Prática</strong><small>DIO / Santander · Atividade de abertura · 1 h · 08/08/2026</small><span aria-hidden="true">↗</span></a></li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section id="academia" class="section wrap gym" aria-labelledby="academia-titulo">
+        <h2 id="academia-titulo">Além do código</h2>
+        <img src="./assets/academia.webp" alt="Retrato em preto e branco de Lucas na academia." loading="lazy" width="1184" height="1328">
+        <p class="lead">A academia faz parte da minha rotina. Foi dela que surgiu a ideia de desenvolver um aplicativo para acompanhar meus treinos.</p>
+      </section>
+      <section id="skiros" class="skiros" aria-labelledby="skiros-titulo" tabindex="-1">
+        <div class="wrap split"><h2 id="skiros-titulo">Skiros</h2><p class="lead">Meu aplicativo para registrar séries e consultar o histórico entre treinos.</p></div>
+      </section>
+      <section id="contato" class="section wrap split" aria-labelledby="contato-titulo" tabindex="-1">
+        <h2 id="contato-titulo">Contato</h2>
+        <div><p class="lead">Explore meus projetos no GitHub.</p><a class="action" href="https://github.com/LcS-ds">Meu GitHub <span aria-hidden="true">↗</span></a></div>
+      </section>
     </main>
+    <footer class="wrap footer"><span>Lucas Sena</span><a href="#inicio">Voltar ao início <span aria-hidden="true">↑</span></a></footer>
   </body>
 </html>
