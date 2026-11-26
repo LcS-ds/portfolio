@@ -17,7 +17,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Abra o endereço local indicado no terminal (por padrão, `http://localhost:5173`). A página inicial de verificação mostra **Portfólio de Lucas Sena**. Use Ctrl+C para encerrar o servidor.
+Abra o endereço local indicado no terminal (por padrão, `http://localhost:5173`). A abertura apresenta **Lucas Sena**. Use **Ver projetos** para ir à seleção de trabalhos. Use Ctrl+C para encerrar o servidor.
 
 ## Verificar o build
 
@@ -28,7 +28,7 @@ pnpm build
 pnpm preview
 ```
 
-O build gera a página em `dist/index.html`. O preview serve essa cópia no endereço exibido no terminal (por padrão, `http://localhost:4173`). Confira o mesmo título no navegador e encerre com Ctrl+C.
+O build gera a página em `dist/index.html`. O preview serve essa cópia no endereço exibido no terminal (por padrão, `http://localhost:4173`). Confira a página e a navegação no navegador e encerre com Ctrl+C.
 
 O código do site fica em `site/`. O Vite usa essa pasta como raiz e recria `dist/` a cada build. As referências visuais de trabalho ficam fora da pasta publicada.
 
