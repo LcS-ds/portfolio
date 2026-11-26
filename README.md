@@ -6,4 +6,6 @@ A [especificação do portfólio](ESPECIFICACAO_DO_PORTFOLIO.md) reúne a sequê
 
 ## Fluxo de desenvolvimento
 
+Acompanhe as entregas no [quadro do portfólio no Trello](https://trello.com/b/Fux87bHx). A primeira tarefa de implementação é [INF-01 — Preparar ambiente local do site](https://trello.com/c/UAMuUlrY).
+
 A `main` reúne as mudanças integradas. Para executar um cartão do Trello, use uma branch no formato `codex/<id-do-cartao>-<resumo>`. Registre o cartão no pull request e vincule o PR e a evidência de validação no cartão.
