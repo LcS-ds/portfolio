@@ -1,0 +1,17 @@
+# Downloads e extrações locais dos sites de referência
+/referencias/
+/kage-design-system/
+
+# Pesquisa e materiais fotográficos de trabalho
+/CONTEXTO_ESCOLHA_COMERCIO.md
+/PESQUISA_COMERCIOS.md
+/analise_cabelo*.json
+/analise_fotografia*.json
+/retrato-*.png
+
+# Dependências, compilações e configuração local
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
