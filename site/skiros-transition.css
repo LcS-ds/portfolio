@@ -1,0 +1,35 @@
+.skiros-particles { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .skiros-transition.particles-ready {
+    background: var(--particle-bg, var(--paper));
+  }
+
+  .skiros-transition.particles-ready::after {
+    content: '';
+    display: block;
+    height: var(--particle-travel, 0px);
+  }
+
+  .particles-ready .skiros-scene {
+    position: sticky;
+    top: var(--particle-pin, 0px);
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+  }
+
+  .particles-ready .gym { opacity: var(--gym-opacity, 1); }
+
+  .particles-ready .skiros-particles.is-visible {
+    display: block;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .skiros-symbol.is-handing-off { opacity: 0; }
+}
