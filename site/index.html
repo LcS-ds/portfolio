@@ -6,10 +6,25 @@
     <meta name="theme-color" content="#101010">
     <meta name="description" content="Portfólio de Lucas Sena, estudante de Desenvolvimento de Sistemas. Conheça meus projetos para web e o aplicativo de treino Skiros.">
     <title>Portfólio de Lucas Sena</title>
+    <script>
+      // Select the static entry before first paint for deep links and restored pages.
+      if (!location.hash && !scrollY && !matchMedia('(prefers-reduced-motion: reduce)').matches
+          && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') {
+        document.documentElement.classList.add('intro-pending');
+        // A failed module download must still release the page.
+        setTimeout(() => document.documentElement.classList.remove('intro-pending'), 4500);
+      }
+    </script>
+    <link rel="stylesheet" href="./intro.css">
     <link rel="stylesheet" href="./portfolio.css">
     <script type="module" src="./navigation.js"></script>
   </head>
   <body>
+    <div class="intro" aria-hidden="true">
+      <div class="intro-backdrop"></div>
+      <img class="intro-dial" src="./assets/mostrador-relogio.png" alt="" width="136" height="144">
+      <div class="intro-meter"><progress max="2" value="0"></progress><span>0%</span></div>
+    </div>
     <a class="skip" href="#inicio">Pular para o conteúdo</a>
     <header class="header">
       <div class="wrap bar">
@@ -107,5 +122,6 @@
       </section>
     </main>
     <footer class="wrap footer"><span>Lucas Sena</span><a href="#inicio">Voltar ao início <span aria-hidden="true">↑</span></a></footer>
+    <script type="module" src="./intro.js"></script>
   </body>
 </html>

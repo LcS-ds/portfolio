@@ -1,0 +1,48 @@
+.intro { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .intro-pending .intro {
+    --dial-width: clamp(96px, 12vmin, 144px);
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .intro-backdrop { position: absolute; inset: 0; background: var(--paper); }
+  .intro-dial {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--dial-width);
+    height: auto;
+    transform: translate(-50%, -50%);
+  }
+  .intro-meter {
+    position: absolute;
+    top: calc(50% + var(--dial-width) * .55 + 2rem);
+    left: 50%;
+    width: min(11rem, 60vw);
+    transform: translateX(-50%);
+    color: var(--silver);
+    font: 600 .75rem/1.4 Inter, sans-serif;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  .intro-meter progress {
+    display: block;
+    appearance: none;
+    border: 0;
+    width: 100%;
+    height: 2px;
+    margin-bottom: .55rem;
+    background: var(--line);
+    color: var(--silver);
+  }
+  .intro-meter progress::-webkit-progress-bar { background: var(--line); }
+  .intro-meter progress::-webkit-progress-value { background: var(--silver); }
+  .intro-meter progress::-moz-progress-bar { background: var(--silver); }
+  .intro-frame { position: absolute; }
+  .intro-frame .portrait { width: 100%; height: 100%; margin: 0; }
+  .intro-pending .intro-revealing .hero .portrait { visibility: hidden; }
+}
