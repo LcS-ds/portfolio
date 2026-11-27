@@ -155,7 +155,9 @@ h3 { font-size: clamp(1.8rem, 3.9vw, 3.7rem); }
 .project-acervo { --project-accent: #5eead4; }
 .project-topspeed { --project-accent: #fb923c; }
 .project-petlume { --project-accent: #60a5fa; }
+.project-slot { display: grid; min-width: 0; }
 .project {
+  --card-highlight: var(--project-accent);
   position: relative;
   isolation: isolate;
   display: flex;
@@ -186,9 +188,7 @@ h3 { font-size: clamp(1.8rem, 3.9vw, 3.7rem); }
   background: radial-gradient(circle, #fff1 .7px, transparent .85px) 0 0 / 1.4rem 1.4rem;
   mask-image: linear-gradient(#000, transparent 75%);
 }
-.project:is(:focus-within, :hover) {
-  border-color: color-mix(in srgb, var(--project-accent) 40%, var(--line));
-}
+
 .project-icon {
   display: grid;
   width: 3.6rem;
@@ -310,6 +310,7 @@ summary::marker { color: var(--accent); }
   list-style: none;
 }
 .stack-card {
+  --card-highlight: var(--stack-accent, var(--silver));
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
@@ -320,10 +321,7 @@ summary::marker { color: var(--accent); }
   border-radius: var(--radius);
   background: color-mix(in srgb, var(--panel) 75%, transparent);
 }
-.stack-card:is(:hover, :focus-visible) {
-  border-color: var(--accent-line);
-  background: var(--panel-hover);
-}
+.stack-card:focus-visible { background: var(--panel-hover); }
 .stack-card h3 { font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.15; }
 .stack-card p { margin-top: .35rem; line-height: 1.45; }
 .stack-icon {
@@ -343,7 +341,35 @@ summary::marker { color: var(--accent); }
 .stack-grid li:nth-child(4) { --stack-accent: #f0b849; }
 .stack-grid li:nth-child(5) { --stack-accent: #22d3ee; }
 .stack-arrow { color: var(--muted); }
-.stack-card:is(:hover, :focus-visible) .stack-arrow { color: var(--accent); }
+.project:focus-within, .stack-card:focus-visible {
+  border-color: color-mix(in srgb, var(--card-highlight) 48%, var(--line));
+}
+.stack-card:focus-visible .stack-arrow { color: var(--card-highlight); }
+
+@media (hover: hover) and (pointer: fine) {
+  .project-slot:hover .project, .stack-grid > li:hover .stack-card {
+    border-color: color-mix(in srgb, var(--card-highlight) 62%, var(--line));
+    box-shadow: 0 .8rem 1.8rem #0005, 0 0 1.5rem color-mix(in srgb, var(--card-highlight) 18%, transparent);
+  }
+  .project-slot:hover .project-icon, .stack-grid > li:hover .stack-icon {
+    border-color: color-mix(in srgb, currentColor 58%, transparent);
+    background: color-mix(in srgb, currentColor 18%, var(--panel));
+  }
+  .stack-grid > li:hover .stack-arrow { color: var(--card-highlight); }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .project, .stack-card {
+    transition: transform .22s ease-out, border-color .22s ease-out, box-shadow .22s ease-out;
+  }
+  .project-icon, .stack-icon {
+    transition: transform .22s ease-out, border-color .22s ease-out, background-color .22s ease-out;
+  }
+  .project-links span, .stack-arrow { transition: transform .22s ease-out, color .22s ease-out; }
+  .project-slot:hover .project, .stack-grid > li:hover .stack-card { transform: translateY(-5px); }
+  .project-slot:hover .project-icon, .stack-grid > li:hover .stack-icon { transform: scale(1.08); }
+  .project-slot:hover .project-links span, .stack-grid > li:hover .stack-arrow { transform: translateX(4px); }
+}
 
 .gym {
   display: grid;
