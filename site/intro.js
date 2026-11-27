@@ -5,6 +5,7 @@ const dial = stage.querySelector('.intro-dial');
 const meter = stage.querySelector('.intro-meter');
 const progress = meter.querySelector('progress');
 const percentage = meter.querySelector('span');
+const loadingDuration = 2500;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 // Source pixels of the hands' pivot and the transparent crop in docs/ds-01.
@@ -82,6 +83,43 @@ async function openPortrait() {
   await travel.finished;
 }
 
+function loadPortrait() {
+  const started = performance.now();
+  const { signal } = events;
+  let decoded = false;
+  let frame;
+
+  const images = Promise.all([dial.decode(), portrait.decode()]).then(() => {
+    decoded = true;
+  });
+  const presentation = new Promise(resolve => {
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      resolve();
+    };
+    signal.addEventListener('abort', stop, { once: true });
+
+    function update(now) {
+      const elapsed = Math.max(0, now - started);
+      const value = Math.min(decoded ? 100 : 94, Math.floor(elapsed / loadingDuration * 100));
+      if (value !== progress.value) {
+        progress.value = value;
+        percentage.textContent = value + '%';
+      }
+      if (value === 100) {
+        signal.removeEventListener('abort', stop);
+        resolve();
+      } else {
+        frame = requestAnimationFrame(update);
+      }
+    }
+
+    frame = requestAnimationFrame(update);
+  });
+
+  return Promise.all([images, presentation]);
+}
+
 async function start() {
   if (!root.classList.contains('intro-pending') || reducedMotion.matches || location.hash || scrollY) {
     finish();
@@ -93,15 +131,10 @@ async function start() {
     window.addEventListener(event, finish, options);
   }
   reducedMotion.addEventListener('change', finish, options);
-  timeout = setTimeout(finish, 3500);
+  timeout = setTimeout(finish, 5000);
 
   try {
-    await Promise.all([dial, portrait].map(async image => {
-      await image.decode();
-      if (events.signal.aborted) return;
-      progress.value += 1;
-      percentage.textContent = (progress.value / progress.max * 100) + '%';
-    }));
+    await loadPortrait();
     if (events.signal.aborted || !root.classList.contains('intro-pending')) return;
     await animate(meter, [{ opacity: 1 }, { opacity: 0 }], { duration: 120 }).finished;
     await openPortrait();
