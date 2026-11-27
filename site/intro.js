@@ -2,6 +2,7 @@ const root = document.documentElement;
 const stage = document.querySelector('.intro');
 const portrait = document.querySelector('.hero .portrait');
 const dial = stage.querySelector('.intro-dial');
+const studioWatch = stage.querySelector('.intro-watch');
 const meter = stage.querySelector('.intro-meter');
 const progress = meter.querySelector('progress');
 const percentage = meter.querySelector('span');
@@ -60,9 +61,12 @@ async function openPortrait() {
 
   const photo = portrait.cloneNode(false);
   photo.alt = '';
-  frame.append(photo, dial);
+  frame.style.setProperty('--dial-width', watch.width * fit + 'px');
+  for (const image of [dial, studioWatch]) {
+    Object.assign(image.style, { left: pivotX + 'px', top: pivotY + 'px' });
+  }
+  frame.append(photo, dial, studioWatch);
   stage.insertBefore(frame, meter);
-  Object.assign(dial.style, { left: pivotX + 'px', top: pivotY + 'px', width: watch.width * fit + 'px' });
   document.body.classList.add('intro-revealing');
 
   const move = { duration: 800, easing: 'cubic-bezier(.4,0,.16,1)' };
@@ -76,7 +80,12 @@ async function openPortrait() {
     { clipPath: `circle(0px at ${pivot})` },
     { clipPath: `circle(${Math.hypot(bounds.width, bounds.height)}px at ${pivot})` },
   ], move);
-  animate(dial, [{ opacity: 1 }, { opacity: 1, offset: .25 }, { opacity: 0 }], move);
+  if (studioWatch.hidden) {
+    animate(dial, [{ opacity: 1 }, { opacity: 1, offset: .25 }, { opacity: 0 }], move);
+  } else {
+    animate(studioWatch, [{ opacity: 1 }, { opacity: 0, offset: .53 }, { opacity: 0 }], move);
+    animate(dial, [{ opacity: 0 }, { opacity: 1, offset: .29 }, { opacity: 0, offset: .73 }, { opacity: 0 }], move);
+  }
   animate(stage.querySelector('.intro-backdrop'), [
     { opacity: 1 }, { opacity: 1, offset: .42 }, { opacity: 0 },
   ], move);
@@ -89,7 +98,11 @@ function loadPortrait() {
   let decoded = false;
   let frame;
 
-  const images = Promise.all([dial.decode(), portrait.decode()]).then(() => {
+  const studio = studioWatch.decode().catch(() => {
+    studioWatch.hidden = true;
+    stage.classList.add('is-watch-fallback');
+  });
+  const images = Promise.all([studio, dial.decode(), portrait.decode()]).then(() => {
     decoded = true;
   });
   const presentation = new Promise(resolve => {
