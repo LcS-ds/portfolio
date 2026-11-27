@@ -212,8 +212,8 @@ function update() {
   }
 
   if (!geometry) {
-    // A direct visit below the gym keeps its anchor until the visitor scrolls back.
-    if (transition.getBoundingClientRect().bottom <= 0) return;
+    // Scroll offsets are rounded, so the transition can end a fraction of a pixel below the anchor.
+    if (transition.getBoundingClientRect().bottom < 1) return;
     transition.classList.add('particles-ready');
     measure();
   }
