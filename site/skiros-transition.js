@@ -15,6 +15,20 @@ const ease = (value) => {
   return t * t * (3 - 2 * t);
 };
 
+const colorSteps = 32;
+const toneStep = 17;
+const particlePalette = Array.from({ length: 16 }, (_, shade) => {
+  const tone = shade * toneStep;
+  return Array.from({ length: colorSteps + 1 }, (_, step) => {
+    const move = step / colorSteps;
+    const light = ease(move);
+    const red = Math.round(mix(tone, mix(188, 245, light), move));
+    const green = Math.round(mix(tone, mix(197, 247, light), move));
+    const blue = Math.round(mix(tone, mix(206, 251, light), move));
+    return { color: `rgb(${red} ${green} ${blue})`, positions: [] };
+  });
+});
+
 function seededRandom() {
   let state = 149;
   return () => {
@@ -85,11 +99,11 @@ function sampleGym(paintedSymbol, windowWidth, pin, compact) {
       (point.x - windowWidth / 2) / (windowWidth / 2),
       (point.y + pin - innerHeight / 2) / (innerHeight / 2),
     ));
-    for (let copy = 0; copy < 3; copy++) {
+    for (let copy = 0; copy < 6; copy++) {
       particles.push({
         x: point.x + random() - .5,
         y: point.y + random() - .5,
-        tone: point.tone,
+        colors: particlePalette[Math.round(point.tone / toneStep)],
         target: paintedSymbol.points[Math.floor(random() * paintedSymbol.points.length)],
         delay: (1 - edge) * .17 + random() * .10,
         driftX: (random() - .5) * spread,
@@ -137,7 +151,7 @@ function measure() {
   const height = innerHeight;
   const compact = width <= 768;
   const pin = Math.min(0, height - scene.offsetHeight);
-  const travel = Math.round(height * (compact ? 1.23 : 1.80));
+  const travel = Math.round(height * (compact ? 1.85 : 2.7));
   const ratio = Math.min(devicePixelRatio || 1, 1.5);
   transition.style.setProperty('--particle-pin', pin + 'px');
   transition.style.setProperty('--particle-travel', travel + 'px');
@@ -187,12 +201,18 @@ function draw(time) {
       const arc = Math.sin(move * Math.PI);
       const x = mix(stage.left + point.x, logoX + wide * point.target[0], move) + arc * point.driftX;
       const y = mix(stage.top + point.y, logoY + high * point.target[1], move) + arc * point.driftY;
-      const light = ease(move);
-      const red = Math.round(mix(point.tone, mix(188, 245, light), move));
-      const green = Math.round(mix(point.tone, mix(197, 247, light), move));
-      const blue = Math.round(mix(point.tone, mix(206, 251, light), move));
-      ctx.fillStyle = `rgb(${red} ${green} ${blue})`;
-      ctx.fillRect(x, y, point.size, point.size);
+      point.colors[Math.round(move * colorSteps)].positions.push(x, y, point.size);
+    }
+    for (const shades of particlePalette) {
+      for (const { color, positions } of shades) {
+        if (!positions.length) continue;
+        ctx.fillStyle = color;
+        for (let index = 0; index < positions.length; index += 3) {
+          const size = positions[index + 2];
+          ctx.fillRect(positions[index], positions[index + 1], size, size);
+        }
+        positions.length = 0;
+      }
     }
   }
   if (solid > 0) {
