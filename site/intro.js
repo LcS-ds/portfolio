@@ -36,12 +36,15 @@ async function openPortrait() {
   window.addEventListener('resize', () => {
     if (stage.clientWidth !== viewportWidth || stage.clientHeight !== viewportHeight) finish();
   }, { signal: events.signal });
-  const fit = Math.min(bounds.width / portrait.naturalWidth, bounds.height / portrait.naturalHeight);
+  const { objectFit, objectPosition } = getComputedStyle(portrait);
+  const fitImage = objectFit === 'cover' ? Math.max : Math.min;
+  const fit = fitImage(bounds.width / portrait.naturalWidth, bounds.height / portrait.naturalHeight);
   if (!fit) return;
 
-  // Coordinates within the object-fit: contain box, including its letterboxing.
-  const pivotX = (bounds.width - portrait.naturalWidth * fit) / 2 + watch.x * fit;
-  const pivotY = (bounds.height - portrait.naturalHeight * fit) / 2 + watch.y * fit;
+  // Use the same crop and percentage position as the static portrait.
+  const [alignX, alignY] = objectPosition.split(' ').map(value => parseFloat(value) / 100);
+  const pivotX = (bounds.width - portrait.naturalWidth * fit) * alignX + watch.x * fit;
+  const pivotY = (bounds.height - portrait.naturalHeight * fit) * alignY + watch.y * fit;
   const dialWidth = dial.getBoundingClientRect().width;
   const zoom = dialWidth / (watch.width * fit);
   const dx = stage.clientWidth / 2 - (bounds.left + pivotX);

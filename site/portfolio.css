@@ -68,10 +68,11 @@ nav a:is(:hover, :focus-visible) { color: var(--accent); background: var(--panel
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: min(103rem, calc(100% - var(--gutter) * 1.5));
+  grid-template-columns: minmax(0, 41fr) minmax(0, 59fr);
   align-items: center;
   min-height: min(49rem, 86svh);
-  padding-block: clamp(.75rem, 2.3vw, 2rem);
+  padding-block: clamp(.5rem, 1.6vw, 1.25rem);
 }
 .hero::before {
   position: absolute;
@@ -95,13 +96,15 @@ h1 em, .gym h2 em { font-family: var(--serif); font-weight: 400; letter-spacing:
 h1 em { font-size: 1.14em; color: #c7e6e3; padding-right: .08em; }
 .hero-text p { max-width: 32rem; margin-block: 1.7rem 1.45rem; font-size: clamp(1rem, 1.5vw, 1.13rem); }
 .portrait {
-  width: min(100%, min(54rem, 93svh) * 2 / 3);
+  width: min(100%, 53rem, max(13rem, (100svh - 3.75rem) * .90));
+  aspect-ratio: 5 / 6;
   height: auto;
   justify-self: center;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: 50% 84%;
   mix-blend-mode: lighten;
-  mask-image: linear-gradient(to right, transparent, black 15% 87%, transparent),
-              linear-gradient(to bottom, transparent, black 9% 83%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 12% 90%, transparent),
+              linear-gradient(to bottom, transparent, black 7% 93%, transparent);
   mask-composite: intersect;
 }
 .action {
@@ -267,9 +270,16 @@ summary::marker { color: var(--accent); }
   }
   .menu-ready .menu-toggle[aria-expanded="false"] + nav { display: none; }
   .hero, .split, .projects, .featured, .gym, .skiros-intro, .skiros-flow-grid { grid-template-columns: minmax(0, 1fr); }
-  .hero { min-height: 0; padding-block: 1rem 2rem; }
+  .hero { width: min(77rem, calc(100% - var(--gutter) * 2)); min-height: 0; padding-block: 1rem 2rem; }
   .hero::before { background: radial-gradient(ellipse 82% 54% at 50% 33%, #153b337a, #10251f35 52%, transparent 100%); }
-  .portrait { grid-row: 1; width: min(100%, min(68svh, 34rem) * 2 / 3); }
+  .portrait {
+    grid-row: 1;
+    width: min(100% + 1rem, min(74svh, 37rem) * 2 / 3);
+    max-width: none;
+    aspect-ratio: auto;
+    object-fit: contain;
+    object-position: 50% 50%;
+  }
   .hero-text { padding-block: 1.2rem .5rem; }
   h1 { font-size: clamp(3.9rem, 16vw, 7rem); }
   h1 > span, h1 > em { display: inline-block; }
