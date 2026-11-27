@@ -3,7 +3,6 @@ import symbolUrl from './assets/skiros/simbolo.png';
 const transition = document.querySelector('.skiros-transition');
 const scene = transition.querySelector('.skiros-scene');
 const gym = transition.querySelector('.gym');
-const photo = gym.querySelector('img');
 const symbol = document.querySelector('.skiros-symbol');
 const skiros = document.querySelector('#skiros');
 const canvas = transition.querySelector('canvas');
@@ -43,20 +42,15 @@ function drawText(context, element, origin) {
   }
 }
 
-function sampleGym(image, paintedSymbol, windowWidth, pin, compact) {
+function sampleGym(paintedSymbol, windowWidth, pin, compact) {
   const bounds = gym.getBoundingClientRect();
   const reference = scene.getBoundingClientRect();
   const sampler = document.createElement('canvas');
-  const scale = Math.min(.5, 800 / Math.max(bounds.width, bounds.height));
+  const scale = Math.min(.85, 850 / Math.max(bounds.width, bounds.height));
   sampler.width = Math.ceil(bounds.width * scale);
   sampler.height = Math.ceil(bounds.height * scale);
   const source = sampler.getContext('2d', { willReadFrequently: true });
   source.scale(scale, scale);
-  const box = photo.getBoundingClientRect();
-  const fit = Math.min(box.width / image.width, box.height / image.height);
-  const width = image.width * fit;
-  const height = image.height * fit;
-  source.drawImage(image, box.left - bounds.left + (box.width - width) / 2, box.top - bounds.top + (box.height - height) / 2, width, height);
   for (const text of gym.querySelectorAll('h2, p')) drawText(source, text, bounds);
   source.fillStyle = getComputedStyle(gym).borderTopColor;
   source.fillRect(0, 0, bounds.width, 1.8);
@@ -64,14 +58,14 @@ function sampleGym(image, paintedSymbol, windowWidth, pin, compact) {
   const data = source.getImageData(0, 0, sampler.width, sampler.height).data;
   const random = seededRandom();
   const points = [];
-  const step = Math.max(2, Math.floor(Math.sqrt(sampler.width * sampler.height / (compact ? 3600 : 7500))));
+  const step = 2;
   for (let y = 0; y < sampler.height; y += step) {
     for (let x = 0; x < sampler.width; x += step) {
       const sx = x + Math.floor(random() * Math.min(step, sampler.width - x));
       const sy = y + Math.floor(random() * Math.min(step, sampler.height - y));
       const index = (sy * sampler.width + sx) * 4;
       const tone = data[index];
-      if (!data[index + 3] || tone < 37) continue;
+      if (data[index + 3] < 64 || tone < 37) continue;
       points.push({
         x: bounds.left - reference.left + sx / scale,
         y: bounds.top - reference.top + sy / scale,
@@ -144,7 +138,7 @@ function measure() {
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   geometry = {
     pin, travel, width, height, logoWidth: Math.min(width * .52, height * .55, 296),
-    particles: sampleGym(materials.photo, materials.symbol, width, pin, compact),
+    particles: sampleGym(materials, width, pin, compact),
   };
 }
 
@@ -176,7 +170,7 @@ function draw(time) {
   const logoX = mix(width / 2, symbolBox.left + symbolBox.width / 2, blend);
   const logoY = mix(height / 2, symbolBox.top + symbolBox.height / 2, blend);
   const wide = mix(logoWidth, symbolBox.width, blend);
-  const high = wide * materials.symbol.paint.height / materials.symbol.paint.width;
+  const high = wide * materials.paint.height / materials.paint.width;
   const solid = ease((time - .72) / .12);
   if (solid < 1) {
     for (const point of particles) {
@@ -195,7 +189,7 @@ function draw(time) {
   }
   if (solid > 0) {
     ctx.globalAlpha = solid;
-    ctx.drawImage(materials.symbol.paint, logoX - wide / 2, logoY - high / 2, wide, high);
+    ctx.drawImage(materials.paint, logoX - wide / 2, logoY - high / 2, wide, high);
   }
   ctx.globalAlpha = 1;
 }
@@ -236,11 +230,11 @@ let loading = false;
 function prepare() {
   if (!motion.matches || loading) return;
   loading = true;
-  Promise.all([loadImage(photo.currentSrc || photo.src), loadImage(symbolUrl), document.fonts.ready])
-    .then(([gymImage, symbolImage]) => {
+  Promise.all([loadImage(symbolUrl), document.fonts.ready])
+    .then(([symbolImage]) => {
       const painted = prepareSymbol(symbolImage);
       if (painted.points.length) {
-        materials = { photo: gymImage, symbol: painted };
+        materials = painted;
         schedule();
       }
     })
