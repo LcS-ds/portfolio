@@ -71,15 +71,15 @@ nav a:is(:hover, :focus-visible) { color: var(--accent); background: var(--panel
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   min-height: min(49rem, 86svh);
-  padding-block: clamp(1.5rem, 3vw, 3rem);
+  padding-block: clamp(.75rem, 2.3vw, 2rem);
 }
 .hero::before {
   position: absolute;
-  inset: 4% max(-2rem, calc(var(--gutter) * -.65)) 0;
+  inset: 0 max(-2rem, calc(var(--gutter) * -.65));
   z-index: -1;
   pointer-events: none;
   content: '';
-  background: radial-gradient(ellipse at 76% 45%, #21595166 0%, #0b282336 38%, transparent 73%);
+  background: radial-gradient(ellipse 57% 64% at 76% 46%, #153b337a, #10251f35 52%, transparent 100%);
 }
 .hero-text { padding-block: 2rem; }
 h1, h2, h3 { font-family: var(--display); font-weight: 710; line-height: .98; letter-spacing: -.058em; }
@@ -95,12 +95,13 @@ h1 em, .gym h2 em { font-family: var(--serif); font-weight: 400; letter-spacing:
 h1 em { font-size: 1.14em; color: #c7e6e3; padding-right: .08em; }
 .hero-text p { max-width: 32rem; margin-block: 1.7rem 1.45rem; font-size: clamp(1rem, 1.5vw, 1.13rem); }
 .portrait {
-  width: min(100%, min(42rem, 76svh) * 2 / 3);
+  width: min(100%, min(54rem, 93svh) * 2 / 3);
   height: auto;
   justify-self: center;
   object-fit: contain;
-  mask-image: linear-gradient(to right, transparent, black 9% 91%, transparent),
-              linear-gradient(to bottom, transparent, black 6% 94%, transparent);
+  mix-blend-mode: lighten;
+  mask-image: linear-gradient(to right, transparent, black 15% 87%, transparent),
+              linear-gradient(to bottom, transparent, black 9% 83%, transparent);
   mask-composite: intersect;
 }
 .action {
@@ -267,8 +268,8 @@ summary::marker { color: var(--accent); }
   .menu-ready .menu-toggle[aria-expanded="false"] + nav { display: none; }
   .hero, .split, .projects, .featured, .gym, .skiros-intro, .skiros-flow-grid { grid-template-columns: minmax(0, 1fr); }
   .hero { min-height: 0; padding-block: 1rem 2rem; }
-  .hero::before { background: radial-gradient(ellipse at 50% 37%, #21595166, transparent 68%); }
-  .portrait { grid-row: 1; width: min(100%, min(59svh, 29rem) * 2 / 3); }
+  .hero::before { background: radial-gradient(ellipse 82% 54% at 50% 33%, #153b337a, #10251f35 52%, transparent 100%); }
+  .portrait { grid-row: 1; width: min(100%, min(68svh, 34rem) * 2 / 3); }
   .hero-text { padding-block: 1.2rem .5rem; }
   h1 { font-size: clamp(3.9rem, 16vw, 7rem); }
   h1 > span, h1 > em { display: inline-block; }
