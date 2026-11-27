@@ -57,37 +57,47 @@
         </div>
       </section>
 
-      <section id="projetos" class="section wrap" aria-labelledby="projetos-titulo" tabindex="-1">
+      <section id="projetos" class="section wrap project-section" aria-labelledby="projetos-titulo" tabindex="-1">
         <h2 id="projetos-titulo">Projetos</h2>
         <div class="projects">
-          <article class="project featured">
-            <div class="preview shelf"><img loading="lazy" src="./assets/acervo.webp" width="1300" height="875" alt="Estante com Dom Casmurro, A Hora da Estrela e O Cortiço abaixo da busca e dos filtros."></div>
-            <div class="project-copy">
-              <p class="tech">JavaScript · Supabase</p>
-              <h3>Acervo de Livros</h3>
-              <p>Criei uma estante digital para cadastrar livros, guardar notas e acompanhar o que já li. A busca encontra obras por título ou autor, e os filtros organizam a coleção por etapa da leitura.</p>
-              <a class="text-link" href="https://github.com/LcS-ds/acervo-livros" aria-label="Ver código do Acervo de Livros">Ver código <span aria-hidden="true">↗</span></a>
+          <article class="project project-acervo">
+            <span class="project-icon" aria-hidden="true"><i class="icon-book"></i></span>
+            <p class="tech">JavaScript · Supabase</p>
+            <h3>Acervo de Livros</h3>
+            <p>Criei uma estante digital para cadastrar livros, guardar notas e acompanhar minhas leituras. É possível buscar por título ou autor e filtrar por etapa da leitura.</p>
+            <div class="project-links">
+              <a class="text-link" href="https://github.com/LcS-ds/acervo-livros" aria-label="Ver código do Acervo de Livros">Ver código <span aria-hidden="true">→</span></a>
             </div>
           </article>
-          <article class="project">
-            <div class="preview race"><img loading="lazy" src="./assets/topspeed.webp" width="1280" height="800" alt="Carro vermelho contorna uma curva iluminada por neon em uma corrida do TopSpeed."></div>
-            <div class="project-copy">
-              <p class="tech">Three.js · Web 3D</p>
-              <h3>TopSpeed</h3>
-              <p>Desenvolvi um jogo de corrida arcade em 3D para o navegador. Quem joga escolhe a pista, o carro e a dificuldade dos adversários antes da largada.</p>
-              <div class="links"><a class="text-link" href="https://lcs-ds.github.io/TopSpeed/">Jogar no navegador <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/LcS-ds/TopSpeed" aria-label="Ver código do TopSpeed">Ver código <span aria-hidden="true">↗</span></a></div>
+          <article class="project project-topspeed">
+            <span class="project-icon" aria-hidden="true"><i class="icon-flag"></i></span>
+            <p class="tech">Three.js · Web 3D</p>
+            <h3>TopSpeed</h3>
+            <p>Desenvolvi um jogo de corrida arcade em 3D para o navegador. Você pode escolher a pista, o carro e a dificuldade dos adversários antes da largada.</p>
+            <div class="project-links">
+              <a class="text-link" href="https://lcs-ds.github.io/TopSpeed/">Jogar <span aria-hidden="true">→</span></a>
+              <a class="text-link" href="https://github.com/LcS-ds/TopSpeed" aria-label="Ver código do TopSpeed">Ver código <span aria-hidden="true">↗</span></a>
             </div>
           </article>
-          <article class="project">
-            <div class="preview mobile-preview"><img loading="lazy" src="./assets/petlume.webp" width="824" height="1800" alt="Página móvel da PetLume com um cão, um gato e o acesso aos serviços do pet shop."></div>
-            <div class="project-copy">
-              <p class="tech">PWA · Web mobile</p>
-              <h3>PetLume</h3>
-              <p>Desenvolvi o site de um pet shop fictício como projeto escolar. Dá para consultar serviços, experimentar o agendamento pelo celular e instalar o site para acessar o conteúdo offline.</p>
-              <div class="links"><a class="text-link" href="https://lcs-ds.github.io/petlume-pwa/">Abrir demonstração <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/LcS-ds/petlume-pwa" aria-label="Ver código do PetLume">Ver código <span aria-hidden="true">↗</span></a></div>
+          <article class="project project-petlume">
+            <span class="project-icon" aria-hidden="true"><i class="icon-paw"></i></span>
+            <p class="tech">PWA · Web mobile</p>
+            <h3>PetLume</h3>
+            <p>Criei um site instalável para um pet shop fictício. Dá para consultar serviços, experimentar o agendamento pelo celular e acessar o conteúdo offline.</p>
+            <div class="project-links">
+              <a class="text-link" href="https://lcs-ds.github.io/petlume-pwa/">Abrir demonstração <span aria-hidden="true">→</span></a>
+              <a class="text-link" href="https://github.com/LcS-ds/petlume-pwa" aria-label="Ver código do PetLume">Ver código <span aria-hidden="true">↗</span></a>
             </div>
           </article>
         </div>
+        <details class="project-previews">
+          <summary>Ver capturas dos projetos</summary>
+          <ul class="project-gallery">
+            <li><a href="./assets/acervo.webp" aria-label="Ampliar captura do Acervo de Livros"><img src="./assets/acervo.webp" width="1300" height="875" loading="lazy" alt="Estante com Dom Casmurro, A Hora da Estrela e O Cortiço abaixo da busca e dos filtros."><span>Acervo de Livros</span></a></li>
+            <li><a href="./assets/topspeed.webp" aria-label="Ampliar captura do TopSpeed"><img src="./assets/topspeed.webp" width="1280" height="800" loading="lazy" alt="Carro vermelho contorna uma curva iluminada por neon em uma corrida do TopSpeed."><span>TopSpeed</span></a></li>
+            <li><a href="./assets/petlume.webp" aria-label="Ampliar captura do PetLume"><img src="./assets/petlume.webp" width="824" height="1800" loading="lazy" alt="Página móvel da PetLume com um cão, um gato e o acesso aos serviços do pet shop."><span>PetLume</span></a></li>
+          </ul>
+        </details>
       </section>
 
       <section id="certificados" class="section wrap split" aria-labelledby="certificados-titulo">
