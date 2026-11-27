@@ -1,0 +1,41 @@
+body { isolation: isolate; }
+
+.site-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    linear-gradient(28deg, transparent 43%, #15736921 44%, transparent 45.5%),
+    radial-gradient(ellipse at 62% 49%, #0b2c26, transparent 69%),
+    var(--paper);
+}
+
+.site-backdrop__aura, .site-backdrop__scene, .site-backdrop__landscape, .site-backdrop::after {
+  position: absolute;
+  inset: 0;
+}
+
+.site-backdrop__aura {
+  mix-blend-mode: screen;
+  filter: hue-rotate(-102deg) saturate(93%) brightness(.96);
+}
+
+.site-backdrop__landscape {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .3;
+}
+
+.site-backdrop::after {
+  content: '';
+  background:
+    radial-gradient(ellipse at center, #0d948829, transparent 72%),
+    linear-gradient(#050505e6, #05050599 50%, #050505);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-backdrop__aura { display: none; }
+}

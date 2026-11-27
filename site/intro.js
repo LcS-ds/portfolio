@@ -2,9 +2,11 @@ const root = document.documentElement;
 const stage = document.querySelector('.intro');
 const portrait = document.querySelector('.hero .portrait');
 const dial = stage.querySelector('.intro-dial');
+const studioWatch = stage.querySelector('.intro-watch');
 const meter = stage.querySelector('.intro-meter');
 const progress = meter.querySelector('progress');
 const percentage = meter.querySelector('span');
+const loadingDuration = 2500;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 // Source pixels of the hands' pivot and the transparent crop in docs/ds-01.
@@ -36,12 +38,15 @@ async function openPortrait() {
   window.addEventListener('resize', () => {
     if (stage.clientWidth !== viewportWidth || stage.clientHeight !== viewportHeight) finish();
   }, { signal: events.signal });
-  const fit = Math.min(bounds.width / portrait.naturalWidth, bounds.height / portrait.naturalHeight);
+  const { objectFit, objectPosition } = getComputedStyle(portrait);
+  const fitImage = objectFit === 'cover' ? Math.max : Math.min;
+  const fit = fitImage(bounds.width / portrait.naturalWidth, bounds.height / portrait.naturalHeight);
   if (!fit) return;
 
-  // Coordinates within the object-fit: contain box, including its letterboxing.
-  const pivotX = (bounds.width - portrait.naturalWidth * fit) / 2 + watch.x * fit;
-  const pivotY = (bounds.height - portrait.naturalHeight * fit) / 2 + watch.y * fit;
+  // Use the same crop and percentage position as the static portrait.
+  const [alignX, alignY] = objectPosition.split(' ').map(value => parseFloat(value) / 100);
+  const pivotX = (bounds.width - portrait.naturalWidth * fit) * alignX + watch.x * fit;
+  const pivotY = (bounds.height - portrait.naturalHeight * fit) * alignY + watch.y * fit;
   const dialWidth = dial.getBoundingClientRect().width;
   const zoom = dialWidth / (watch.width * fit);
   const dx = stage.clientWidth / 2 - (bounds.left + pivotX);
@@ -56,9 +61,12 @@ async function openPortrait() {
 
   const photo = portrait.cloneNode(false);
   photo.alt = '';
-  frame.append(photo, dial);
+  frame.style.setProperty('--dial-width', watch.width * fit + 'px');
+  for (const image of [dial, studioWatch]) {
+    Object.assign(image.style, { left: pivotX + 'px', top: pivotY + 'px' });
+  }
+  frame.append(photo, dial, studioWatch);
   stage.insertBefore(frame, meter);
-  Object.assign(dial.style, { left: pivotX + 'px', top: pivotY + 'px', width: watch.width * fit + 'px' });
   document.body.classList.add('intro-revealing');
 
   const move = { duration: 800, easing: 'cubic-bezier(.4,0,.16,1)' };
@@ -72,11 +80,57 @@ async function openPortrait() {
     { clipPath: `circle(0px at ${pivot})` },
     { clipPath: `circle(${Math.hypot(bounds.width, bounds.height)}px at ${pivot})` },
   ], move);
-  animate(dial, [{ opacity: 1 }, { opacity: 1, offset: .25 }, { opacity: 0 }], move);
+  if (studioWatch.hidden) {
+    animate(dial, [{ opacity: 1 }, { opacity: 1, offset: .25 }, { opacity: 0 }], move);
+  } else {
+    animate(studioWatch, [{ opacity: 1 }, { opacity: 0, offset: .53 }, { opacity: 0 }], move);
+    animate(dial, [{ opacity: 0 }, { opacity: 1, offset: .29 }, { opacity: 0, offset: .73 }, { opacity: 0 }], move);
+  }
   animate(stage.querySelector('.intro-backdrop'), [
     { opacity: 1 }, { opacity: 1, offset: .42 }, { opacity: 0 },
   ], move);
   await travel.finished;
+}
+
+function loadPortrait() {
+  const started = performance.now();
+  const { signal } = events;
+  let decoded = false;
+  let frame;
+
+  const studio = studioWatch.decode().catch(() => {
+    studioWatch.hidden = true;
+    stage.classList.add('is-watch-fallback');
+  });
+  const images = Promise.all([studio, dial.decode(), portrait.decode()]).then(() => {
+    decoded = true;
+  });
+  const presentation = new Promise(resolve => {
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      resolve();
+    };
+    signal.addEventListener('abort', stop, { once: true });
+
+    function update(now) {
+      const elapsed = Math.max(0, now - started);
+      const value = Math.min(decoded ? 100 : 94, Math.floor(elapsed / loadingDuration * 100));
+      if (value !== progress.value) {
+        progress.value = value;
+        percentage.textContent = value + '%';
+      }
+      if (value === 100) {
+        signal.removeEventListener('abort', stop);
+        resolve();
+      } else {
+        frame = requestAnimationFrame(update);
+      }
+    }
+
+    frame = requestAnimationFrame(update);
+  });
+
+  return Promise.all([images, presentation]);
 }
 
 async function start() {
@@ -90,15 +144,10 @@ async function start() {
     window.addEventListener(event, finish, options);
   }
   reducedMotion.addEventListener('change', finish, options);
-  timeout = setTimeout(finish, 3500);
+  timeout = setTimeout(finish, 5000);
 
   try {
-    await Promise.all([dial, portrait].map(async image => {
-      await image.decode();
-      if (events.signal.aborted) return;
-      progress.value += 1;
-      percentage.textContent = (progress.value / progress.max * 100) + '%';
-    }));
+    await loadPortrait();
     if (events.signal.aborted || !root.classList.contains('intro-pending')) return;
     await animate(meter, [{ opacity: 1 }, { opacity: 0 }], { duration: 120 }).finished;
     await openPortrait();

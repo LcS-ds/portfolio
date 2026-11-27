@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#101010">
+    <meta name="theme-color" content="#050505">
     <meta name="description" content="Portfólio de Lucas Sena, estudante de Desenvolvimento de Sistemas. Conheça meus projetos para web e o aplicativo de treino Skiros.">
     <title>Portfólio de Lucas Sena</title>
     <script>
@@ -12,23 +12,32 @@
           && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') {
         document.documentElement.classList.add('intro-pending');
         // A failed module download must still release the page.
-        setTimeout(() => document.documentElement.classList.remove('intro-pending'), 4500);
+        setTimeout(() => document.documentElement.classList.remove('intro-pending'), 6000);
       }
     </script>
     <link rel="stylesheet" href="./intro.css">
     <link rel="stylesheet" href="./portfolio.css">
+    <link rel="stylesheet" href="./background.css">
+    <link rel="stylesheet" href="./skiros-transition.css">
     <script type="module" src="./navigation.js"></script>
+    <script type="module" src="./background.js"></script>
+    <script type="module" src="./skiros-transition.js"></script>
   </head>
   <body>
+    <div class="site-backdrop" aria-hidden="true">
+      <div class="site-backdrop__aura"><div class="site-backdrop__scene"></div></div>
+      <img class="site-backdrop__landscape" src="./assets/asimov/landscape.webp" alt="" width="1280" height="720" decoding="async" fetchpriority="low">
+    </div>
     <div class="intro" aria-hidden="true">
       <div class="intro-backdrop"></div>
+      <img class="intro-watch" src="./assets/relogio-estudio.webp" alt="" width="660" height="502" fetchpriority="high">
       <img class="intro-dial" src="./assets/mostrador-relogio.png" alt="" width="136" height="144">
-      <div class="intro-meter"><progress max="2" value="0"></progress><span>0%</span></div>
+      <div class="intro-meter"><progress max="100" value="0"></progress><span>0%</span></div>
     </div>
     <a class="skip" href="#inicio">Pular para o conteúdo</a>
     <header class="header">
       <div class="wrap bar">
-        <a class="brand" href="#inicio" aria-label="Lucas Sena, início"><span aria-hidden="true">LS.</span> Lucas Sena</a>
+        <a class="brand" href="#inicio" aria-label="Lucas Sena, início">Lucas Sena<span aria-hidden="true">.</span></a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu <span aria-hidden="true">☰</span></button>
         <nav id="nav" aria-label="Navegação principal">
           <a href="#sobre">Sobre</a><a href="#projetos">Projetos</a><a href="#skiros">Skiros</a><a href="#contato">Contato</a>
@@ -38,9 +47,9 @@
     <main>
       <section id="inicio" class="hero wrap" aria-labelledby="nome" tabindex="-1">
         <div class="hero-text">
-          <h1 id="nome">Lucas<br> Sena<span aria-hidden="true">.</span></h1>
+          <h1 id="nome"><span>Lucas</span> <em>Sena</em></h1>
           <p>Curso o primeiro ano de Desenvolvimento de Sistemas na ETEC Dra. Maria Augusta Saraiva. Desenvolvo projetos para a web, de catálogos de livros a jogos de corrida.</p>
-          <a class="action" href="#projetos">Ver projetos <span aria-hidden="true">↓</span></a>
+          <a class="action" href="#projetos">Ver projetos <span class="action-icon" aria-hidden="true">↓</span></a>
         </div>
         <img class="portrait" src="./assets/lucas-sena.webp" alt="Lucas ajusta a gravata, com o relógio à vista no pulso." width="1024" height="1536" fetchpriority="high">
       </section>
@@ -54,37 +63,53 @@
         </div>
       </section>
 
-      <section id="projetos" class="section wrap" aria-labelledby="projetos-titulo" tabindex="-1">
+      <section id="projetos" class="section wrap project-section" aria-labelledby="projetos-titulo" tabindex="-1">
         <h2 id="projetos-titulo">Projetos</h2>
         <div class="projects">
-          <article class="project featured">
-            <div class="preview shelf"><img loading="lazy" src="./assets/acervo.webp" width="1300" height="875" alt="Estante com Dom Casmurro, A Hora da Estrela e O Cortiço abaixo da busca e dos filtros."></div>
-            <div class="project-copy">
+          <div class="project-slot">
+            <article class="project project-acervo">
+              <span class="project-icon" aria-hidden="true"><i class="icon-book"></i></span>
               <p class="tech">JavaScript · Supabase</p>
               <h3>Acervo de Livros</h3>
-              <p>Criei uma estante digital para cadastrar livros, guardar notas e acompanhar o que já li. A busca encontra obras por título ou autor, e os filtros organizam a coleção por etapa da leitura.</p>
-              <a class="text-link" href="https://github.com/LcS-ds/acervo-livros" aria-label="Ver código do Acervo de Livros">Ver código <span aria-hidden="true">↗</span></a>
-            </div>
-          </article>
-          <article class="project">
-            <div class="preview race"><img loading="lazy" src="./assets/topspeed.webp" width="1280" height="800" alt="Carro vermelho contorna uma curva iluminada por neon em uma corrida do TopSpeed."></div>
-            <div class="project-copy">
+              <p>Criei uma estante digital para cadastrar livros, guardar notas e acompanhar minhas leituras. É possível buscar por título ou autor e filtrar por etapa da leitura.</p>
+              <div class="project-links">
+                <a class="text-link" href="https://github.com/LcS-ds/acervo-livros" aria-label="Ver código do Acervo de Livros">Ver código <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+          </div>
+          <div class="project-slot">
+            <article class="project project-topspeed">
+              <span class="project-icon" aria-hidden="true"><i class="icon-flag"></i></span>
               <p class="tech">Three.js · Web 3D</p>
               <h3>TopSpeed</h3>
-              <p>Desenvolvi um jogo de corrida arcade em 3D para o navegador. Quem joga escolhe a pista, o carro e a dificuldade dos adversários antes da largada.</p>
-              <div class="links"><a class="text-link" href="https://lcs-ds.github.io/TopSpeed/">Jogar no navegador <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/LcS-ds/TopSpeed" aria-label="Ver código do TopSpeed">Ver código <span aria-hidden="true">↗</span></a></div>
-            </div>
-          </article>
-          <article class="project">
-            <div class="preview mobile-preview"><img loading="lazy" src="./assets/petlume.webp" width="824" height="1800" alt="Página móvel da PetLume com um cão, um gato e o acesso aos serviços do pet shop."></div>
-            <div class="project-copy">
+              <p>Desenvolvi um jogo de corrida arcade em 3D para o navegador. Você pode escolher a pista, o carro e a dificuldade dos adversários antes da largada.</p>
+              <div class="project-links">
+                <a class="text-link" href="https://lcs-ds.github.io/TopSpeed/">Jogar <span aria-hidden="true">→</span></a>
+                <a class="text-link" href="https://github.com/LcS-ds/TopSpeed" aria-label="Ver código do TopSpeed">Ver código <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          </div>
+          <div class="project-slot">
+            <article class="project project-petlume">
+              <span class="project-icon" aria-hidden="true"><i class="icon-paw"></i></span>
               <p class="tech">PWA · Web mobile</p>
               <h3>PetLume</h3>
-              <p>Desenvolvi o site de um pet shop fictício como projeto escolar. Dá para consultar serviços, experimentar o agendamento pelo celular e instalar o site para acessar o conteúdo offline.</p>
-              <div class="links"><a class="text-link" href="https://lcs-ds.github.io/petlume-pwa/">Abrir demonstração <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/LcS-ds/petlume-pwa" aria-label="Ver código do PetLume">Ver código <span aria-hidden="true">↗</span></a></div>
-            </div>
-          </article>
+              <p>Criei um site instalável para um pet shop fictício. Dá para consultar serviços, experimentar o agendamento pelo celular e acessar o conteúdo offline.</p>
+              <div class="project-links">
+                <a class="text-link" href="https://lcs-ds.github.io/petlume-pwa/">Abrir demonstração <span aria-hidden="true">→</span></a>
+                <a class="text-link" href="https://github.com/LcS-ds/petlume-pwa" aria-label="Ver código do PetLume">Ver código <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          </div>
         </div>
+        <details class="project-previews">
+          <summary>Ver capturas dos projetos</summary>
+          <ul class="project-gallery">
+            <li><a href="./assets/acervo.webp" aria-label="Ampliar captura do Acervo de Livros"><img src="./assets/acervo.webp" width="1300" height="875" loading="lazy" alt="Estante com Dom Casmurro, A Hora da Estrela e O Cortiço abaixo da busca e dos filtros."><span>Acervo de Livros</span></a></li>
+            <li><a href="./assets/topspeed.webp" aria-label="Ampliar captura do TopSpeed"><img src="./assets/topspeed.webp" width="1280" height="800" loading="lazy" alt="Carro vermelho contorna uma curva iluminada por neon em uma corrida do TopSpeed."><span>TopSpeed</span></a></li>
+            <li><a href="./assets/petlume.webp" aria-label="Ampliar captura do PetLume"><img src="./assets/petlume.webp" width="824" height="1800" loading="lazy" alt="Página móvel da PetLume com um cão, um gato e o acesso aos serviços do pet shop."><span>PetLume</span></a></li>
+          </ul>
+        </details>
       </section>
 
       <section id="certificados" class="section wrap split" aria-labelledby="certificados-titulo">
@@ -108,11 +133,100 @@
         </div>
       </section>
 
-      <section id="academia" class="section wrap gym" aria-labelledby="academia-titulo">
-        <h2 id="academia-titulo">Além do código</h2>
-        <img src="./assets/academia.webp" alt="Lucas fotografa o reflexo no espelho com o celular à frente do rosto." loading="lazy" width="1184" height="1328">
-        <p class="lead">A academia faz parte da minha rotina. Entre uma série e outra, eu queria lembrar quanto usei na última vez. Criei o Skiros para ter essa resposta à mão e registrar a série durante o treino.</p>
+      <section id="stacks" class="section wrap" aria-labelledby="stacks-titulo">
+        <h2 id="stacks-titulo">Minhas stacks</h2>
+        <ul class="stack-grid" role="list">
+          <li>
+            <a class="stack-card" href="https://github.com/LcS-ds/petlume-pwa">
+              <span class="stack-icon stack-icon-group" aria-hidden="true">
+                <img src="./assets/stacks/html.svg" alt="" width="24" height="24">
+                <img src="./assets/stacks/css.svg" alt="" width="24" height="24">
+                <img src="./assets/stacks/javascript.svg" alt="" width="24" height="24">
+              </span>
+              <div>
+                <h3>HTML, CSS e JavaScript</h3>
+                <p>Interfaces do Acervo de Livros e do PetLume.</p>
+              </div>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a class="stack-card" href="https://github.com/LcS-ds/acervo-livros">
+              <span class="stack-icon" aria-hidden="true">
+                <img src="./assets/stacks/supabase.svg" alt="" width="24" height="24">
+              </span>
+              <div>
+                <h3>Supabase</h3>
+                <p>Armazenamento de livros e notas no Acervo de Livros.</p>
+              </div>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a class="stack-card" href="https://lcs-ds.github.io/TopSpeed/">
+              <span class="stack-icon" aria-hidden="true">
+                <img src="./assets/stacks/three.svg" alt="" width="24" height="24">
+              </span>
+              <div>
+                <h3>Three.js</h3>
+                <p>Pistas e carros em 3D no TopSpeed.</p>
+              </div>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a class="stack-card" href="https://github.com/LcS-ds/ExerciciosProgramacao">
+              <span class="stack-icon" aria-hidden="true">
+                <img src="./assets/stacks/java.svg" alt="" width="24" height="24">
+              </span>
+              <div>
+                <h3>Java</h3>
+                <p>Exercícios de lógica e fundamentos de programação.</p>
+              </div>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a class="stack-card" href="https://lcs-ds.github.io/petlume-pwa/">
+              <span class="stack-icon stack-icon-wide" aria-hidden="true">
+                <img src="./assets/stacks/pwa.svg" alt="" width="24" height="24">
+              </span>
+              <div>
+                <h3>PWA</h3>
+                <p>Instalação no celular e acesso offline no PetLume.</p>
+              </div>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a class="stack-card" href="#skiros">
+              <span class="stack-icon stack-icon-group" aria-hidden="true">
+                <img src="./assets/stacks/typescript.svg" alt="" width="24" height="24">
+                <img src="./assets/stacks/capacitor.svg" alt="" width="24" height="24">
+              </span>
+              <div>
+                <h3>TypeScript e Capacitor</h3>
+                <p>Desenvolvimento do Skiros para web e Android.</p>
+              </div>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
       </section>
+
+      <div class="skiros-transition">
+        <div class="skiros-scene">
+          <section id="academia" class="section wrap gym" aria-labelledby="academia-titulo">
+            <h2 id="academia-titulo">Além <em>do código</em></h2>
+            <div class="gym-copy">
+              <p class="lead">A academia faz parte da minha rotina. Entre uma série e outra, eu queria lembrar quanto peso tinha usado na última vez.</p>
+              <p>Criei o Skiros para anotar as cargas e repetições, retomar uma sessão interrompida e rever os treinos que concluí na semana.</p>
+              <p>Esse projeto nasceu de uma situação que conheço bem. Uso o que construí no dia a dia para descobrir o que ainda pode ficar mais simples.</p>
+            </div>
+          </section>
+        </div>
+        <canvas class="skiros-particles" aria-hidden="true"></canvas>
+      </div>
       <section id="skiros" class="skiros" aria-labelledby="skiros-titulo" tabindex="-1">
         <div class="wrap">
           <div class="skiros-intro">
@@ -150,7 +264,27 @@
       </section>
       <section id="contato" class="section wrap split" aria-labelledby="contato-titulo" tabindex="-1">
         <h2 id="contato-titulo">Contato</h2>
-        <div><p class="lead">Explore meus projetos no GitHub.</p><a class="action" href="https://github.com/LcS-ds">Meu GitHub <span aria-hidden="true">↗</span></a></div>
+        <div>
+          <address class="contact-links">
+            <a class="contact-card contact-whatsapp" href="https://wa.me/5511953746381?text=Ol%C3%A1%2C%20Lucas%21%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar.">
+              <span class="contact-icon"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967c-.273-.099-.471-.148-.67.15c-.197.297-.767.966-.94 1.164c-.173.199-.347.223-.644.075c-.297-.15-1.255-.463-2.39-1.475c-.883-.788-1.48-1.761-1.653-2.059c-.173-.297-.018-.458.13-.606c.134-.133.298-.347.446-.52s.198-.298.298-.497c.099-.198.05-.371-.025-.52s-.669-1.612-.916-2.207c-.242-.579-.487-.5-.669-.51a13 13 0 0 0-.57-.01c-.198 0-.52.074-.792.372c-.272.297-1.04 1.016-1.04 2.479c0 1.462 1.065 2.875 1.213 3.074s2.096 3.2 5.077 4.487c.709.306 1.262.489 1.694.625c.712.227 1.36.195 1.871.118c.571-.085 1.758-.719 2.006-1.413s.248-1.289.173-1.413c-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214l-3.741.982l.998-3.648l-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884c2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.9 11.9 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413"/></svg></span>
+              <span class="contact-copy"><strong>WhatsApp</strong><span>+55 11 95374-6381</span></span>
+              <span class="contact-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="contact-card" href="mailto:sena.lucasds@gmail.com">
+              <span class="contact-icon">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="5" width="18" height="14" rx="3"/>
+                  <path d="m4 7 6.5 5.1a2.5 2.5 0 0 0 3 0L20 7"/>
+                </svg>
+              </span>
+              <span class="contact-copy"><strong>E-mail</strong><span>sena.lucasds@gmail.com</span></span>
+              <span class="contact-arrow" aria-hidden="true">↗</span>
+            </a>
+          </address>
+          <p class="lead">Explore meus projetos no GitHub.</p>
+          <a class="action" href="https://github.com/LcS-ds">Meu GitHub <span class="action-icon" aria-hidden="true">↗</span></a>
+        </div>
       </section>
     </main>
     <footer class="wrap footer"><span>Lucas Sena</span><a href="#inicio">Voltar ao início <span aria-hidden="true">↑</span></a></footer>

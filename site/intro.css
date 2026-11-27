@@ -10,17 +10,24 @@
     pointer-events: none;
   }
   .intro-backdrop { position: absolute; inset: 0; background: var(--paper); }
-  .intro-dial {
+  .intro-dial, .intro-watch {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: var(--dial-width);
     height: auto;
     transform: translate(-50%, -50%);
   }
+  .intro-dial { width: var(--dial-width); opacity: 0; }
+  .intro-watch {
+    width: calc(var(--dial-width) * 2.36);
+    max-width: none;
+    /* Align the axis of the generated watch hands with the original dial. */
+    transform: translate(-51.2%, -49.3%);
+  }
+  .intro.is-watch-fallback .intro-dial { opacity: 1; }
   .intro-meter {
     position: absolute;
-    top: calc(50% + var(--dial-width) * .55 + 2rem);
+    top: calc(50% + var(--dial-width) * .95 + 1.25rem);
     left: 50%;
     width: min(11rem, 60vw);
     transform: translateX(-50%);
@@ -45,4 +52,7 @@
   .intro-frame { position: absolute; }
   .intro-frame .portrait { width: 100%; height: 100%; margin: 0; }
   .intro-pending .intro-revealing .hero .portrait { visibility: hidden; }
+}
+@media (prefers-reduced-motion: no-preference) and (max-height: 360px) {
+  .intro-pending .intro { --dial-width: clamp(60px, 24svh, 86px); }
 }
