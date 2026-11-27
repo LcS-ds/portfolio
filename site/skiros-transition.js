@@ -74,23 +74,31 @@ function sampleGym(paintedSymbol, windowWidth, pin, compact) {
     }
   }
 
-  const count = Math.min(points.length, compact ? 850 : 2000);
+  const sourceCount = Math.min(points.length, compact ? 850 : 2000);
   const spread = compact ? 88 : 150;
-  return Array.from({ length: count }, (_, index) => {
+  const particles = [];
+  for (let index = 0; index < sourceCount; index++) {
     const other = index + Math.floor(random() * (points.length - index));
     [points[index], points[other]] = [points[other], points[index]];
     const point = points[index];
-    const target = paintedSymbol.points[Math.floor(random() * paintedSymbol.points.length)];
     const edge = Math.min(1, Math.hypot(
       (point.x - windowWidth / 2) / (windowWidth / 2),
       (point.y + pin - innerHeight / 2) / (innerHeight / 2),
     ));
-    return {
-      ...point, target, delay: (1 - edge) * .17 + random() * .10,
-      driftX: (random() - .5) * spread, driftY: (random() - .5) * spread,
-      size: (compact ? .9 : 1.1) + random() * 1.7,
-    };
-  });
+    for (let copy = 0; copy < 3; copy++) {
+      particles.push({
+        x: point.x + random() - .5,
+        y: point.y + random() - .5,
+        tone: point.tone,
+        target: paintedSymbol.points[Math.floor(random() * paintedSymbol.points.length)],
+        delay: (1 - edge) * .17 + random() * .10,
+        driftX: (random() - .5) * spread,
+        driftY: (random() - .5) * spread,
+        size: (compact ? .9 : 1.1) + random() * 1.7,
+      });
+    }
+  }
+  return particles;
 }
 
 function prepareSymbol(image) {
@@ -129,7 +137,7 @@ function measure() {
   const height = innerHeight;
   const compact = width <= 768;
   const pin = Math.min(0, height - scene.offsetHeight);
-  const travel = Math.round(height * (compact ? .82 : 1.20));
+  const travel = Math.round(height * (compact ? 1.23 : 1.80));
   const ratio = Math.min(devicePixelRatio || 1, 1.5);
   transition.style.setProperty('--particle-pin', pin + 'px');
   transition.style.setProperty('--particle-travel', travel + 'px');
@@ -173,6 +181,7 @@ function draw(time) {
   const high = wide * materials.paint.height / materials.paint.width;
   const solid = ease((time - .72) / .12);
   if (solid < 1) {
+    ctx.globalAlpha = ease(time / .14) * (1 - solid);
     for (const point of particles) {
       const move = ease((time - point.delay - .04) / .66);
       const arc = Math.sin(move * Math.PI);
@@ -183,7 +192,6 @@ function draw(time) {
       const green = Math.round(mix(point.tone, mix(197, 247, light), move));
       const blue = Math.round(mix(point.tone, mix(206, 251, light), move));
       ctx.fillStyle = `rgb(${red} ${green} ${blue})`;
-      ctx.globalAlpha = ease(time / .14) * (1 - solid);
       ctx.fillRect(x, y, point.size, point.size);
     }
   }
