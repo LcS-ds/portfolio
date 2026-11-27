@@ -25,19 +25,21 @@ function seededRandom() {
 }
 
 function drawText(context, element, origin) {
-  const style = getComputedStyle(element);
-  context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-  context.fillStyle = style.color;
-  context.textBaseline = 'middle';
-  context.letterSpacing = style.letterSpacing === 'normal' ? '0px' : style.letterSpacing;
-  const text = element.firstChild;
   const range = document.createRange();
-
-  for (const word of text.textContent.matchAll(/\S+/gu)) {
-    range.setStart(text, word.index);
-    range.setEnd(text, word.index + word[0].length);
-    const rect = range.getBoundingClientRect();
-    context.fillText(word[0], rect.left - origin.left, rect.top + rect.height / 2 - origin.top);
+  const nodes = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+  while (nodes.nextNode()) {
+    const text = nodes.currentNode;
+    const style = getComputedStyle(text.parentElement);
+    context.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+    context.fillStyle = style.color;
+    context.textBaseline = 'middle';
+    context.letterSpacing = style.letterSpacing === 'normal' ? '0px' : style.letterSpacing;
+    for (const word of text.textContent.matchAll(/\S+/gu)) {
+      range.setStart(text, word.index);
+      range.setEnd(text, word.index + word[0].length);
+      const rect = range.getBoundingClientRect();
+      context.fillText(word[0], rect.left - origin.left, rect.top + rect.height / 2 - origin.top);
+    }
   }
 }
 
@@ -217,7 +219,7 @@ function update() {
   const time = clamp((geometry.pin - transition.getBoundingClientRect().top) / geometry.travel);
   const color = ease((time - .05) / .7);
   transition.style.setProperty('--gym-opacity', 1 - ease(time / .28));
-  transition.style.setProperty('--particle-bg', `rgb(${mix(16, 8, color)} ${mix(16, 9, color)} ${mix(16, 11, color)})`);
+  transition.style.setProperty('--particle-tone', color * 100 + '%');
   draw(time);
 }
 
