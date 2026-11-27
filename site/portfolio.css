@@ -407,8 +407,38 @@ summary::marker { color: var(--accent); }
 .skiros-flow-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); margin-top: 1.5rem; }
 .skiros-caption { margin-top: 1rem; font-size: .875rem; }
 
-.contact-links { display: grid; justify-items: start; margin-bottom: 1.4rem; font-style: normal; }
-.contact-links a { max-width: 100%; color: var(--accent); text-decoration: underline; text-underline-offset: .25em; overflow-wrap: anywhere; }
+.contact-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: .75rem;
+  margin-bottom: 1.75rem;
+  font-style: normal;
+}
+.contact-card {
+  --contact-accent: var(--accent);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .75rem;
+  padding: .85rem;
+  border: 1px solid color-mix(in srgb, var(--contact-accent) 20%, var(--line));
+  border-radius: 1rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--contact-accent) 10%, var(--panel)), var(--panel));
+}
+.contact-whatsapp { --contact-accent: #79e6a3; }
+.contact-card:is(:hover, :focus-visible) { border-color: var(--contact-accent); }
+.contact-icon {
+  display: grid;
+  width: 2.5rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: .75rem;
+  color: var(--contact-accent);
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+.contact-copy { display: grid; gap: .15rem; line-height: 1.4; }
+.contact-copy span { color: var(--silver); font-size: .9rem; overflow-wrap: anywhere; }
+.contact-arrow { color: var(--contact-accent); }
 
 .footer { padding-block: 1rem; color: var(--muted); font-size: .875rem; }
 
