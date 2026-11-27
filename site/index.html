@@ -17,11 +17,17 @@
     </script>
     <link rel="stylesheet" href="./intro.css">
     <link rel="stylesheet" href="./portfolio.css">
+    <link rel="stylesheet" href="./background.css">
     <link rel="stylesheet" href="./skiros-transition.css">
     <script type="module" src="./navigation.js"></script>
+    <script type="module" src="./background.js"></script>
     <script type="module" src="./skiros-transition.js"></script>
   </head>
   <body>
+    <div class="site-backdrop" aria-hidden="true">
+      <div class="site-backdrop__aura"><div class="site-backdrop__scene"></div></div>
+      <img class="site-backdrop__landscape" src="./assets/asimov/landscape.webp" alt="" width="1280" height="720" decoding="async" fetchpriority="low">
+    </div>
     <div class="intro" aria-hidden="true">
       <div class="intro-backdrop"></div>
       <img class="intro-watch" src="./assets/relogio-estudio.webp" alt="" width="660" height="502" fetchpriority="high">

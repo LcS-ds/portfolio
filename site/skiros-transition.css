@@ -2,7 +2,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .skiros-transition.particles-ready {
-    background: color-mix(in srgb, var(--skiros-bg) var(--particle-tone, 0%), var(--paper));
+    background: color-mix(in srgb, var(--skiros-bg) var(--particle-tone, 0%), transparent);
   }
 
   .skiros-transition.particles-ready::after {

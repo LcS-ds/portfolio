@@ -65,22 +65,12 @@ nav a:is(:hover, :focus-visible) { color: var(--accent); background: var(--panel
 .menu-toggle { display: none; }
 
 .hero {
-  position: relative;
-  isolation: isolate;
   display: grid;
   width: min(103rem, calc(100% - var(--gutter) * 1.5));
   grid-template-columns: minmax(0, 41fr) minmax(0, 59fr);
   align-items: center;
   min-height: min(49rem, 86svh);
   padding-block: clamp(.5rem, 1.6vw, 1.25rem);
-}
-.hero::before {
-  position: absolute;
-  inset: 0 max(-2rem, calc(var(--gutter) * -.65));
-  z-index: -1;
-  pointer-events: none;
-  content: '';
-  background: radial-gradient(ellipse 57% 64% at 76% 46%, #153b337a, #10251f35 52%, transparent 100%);
 }
 .hero-text { padding-block: 2rem; }
 h1, h2, h3 { font-family: var(--display); font-weight: 710; line-height: .98; letter-spacing: -.058em; }
@@ -156,15 +146,6 @@ h3 { font-size: clamp(1.8rem, 3.9vw, 3.7rem); }
 }
 .formation strong, .credentials strong { color: var(--ink); }
 
-.project-section { position: relative; isolation: isolate; }
-.project-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 46% 55%, #10332d38, transparent 72%);
-}
 .projects, .project-gallery {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -337,7 +318,7 @@ summary::marker { color: var(--accent); }
   --skiros-text: #f5f7fb;
   --skiros-muted: #abb5c4;
   --accent: #d1daf1;
-  background: linear-gradient(var(--skiros-bg) calc(100% - 4rem), var(--paper));
+  background: linear-gradient(var(--skiros-bg) calc(100% - 4rem), transparent);
   color: var(--skiros-text);
 }
 .skiros-intro {
@@ -374,7 +355,6 @@ summary::marker { color: var(--accent); }
 .skiros-flow-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); margin-top: 1.5rem; }
 .skiros-caption { margin-top: 1rem; font-size: .875rem; }
 
-#contato { background: radial-gradient(ellipse at 80% 60%, #14b8a614, transparent 64%); }
 .footer { padding-block: 1rem; color: var(--muted); font-size: .875rem; }
 
 @media (max-width: 48rem) {
@@ -394,7 +374,6 @@ summary::marker { color: var(--accent); }
   .menu-ready .menu-toggle[aria-expanded="false"] + nav { display: none; }
   .hero, .split, .gym, .skiros-intro, .skiros-flow-grid { grid-template-columns: minmax(0, 1fr); }
   .hero { width: min(77rem, calc(100% - var(--gutter) * 2)); min-height: 0; padding-block: 1rem 2rem; }
-  .hero::before { background: radial-gradient(ellipse 82% 54% at 50% 33%, #153b337a, #10251f35 52%, transparent 100%); }
   .portrait {
     grid-row: 1;
     width: min(100% + 1rem, min(74svh, 37rem) * 2 / 3);
