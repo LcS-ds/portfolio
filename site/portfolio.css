@@ -301,6 +301,50 @@ h3 { font-size: clamp(1.8rem, 3.9vw, 3.7rem); }
 summary { padding-block: 1rem; color: var(--ink); font-weight: 600; }
 summary::marker { color: var(--accent); }
 
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+  margin: clamp(1.5rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.stack-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(.65rem, 2vw, 1.3rem);
+  height: 100%;
+  padding: clamp(.8rem, 2.5vw, 1.65rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 75%, transparent);
+}
+.stack-card:is(:hover, :focus-visible) {
+  border-color: var(--accent-line);
+  background: var(--panel-hover);
+}
+.stack-card h3 { font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.15; }
+.stack-card p { margin-top: .35rem; line-height: 1.45; }
+.stack-icon {
+  display: grid;
+  width: clamp(2.6rem, 5vw, 3.5rem);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: .8rem;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  color: var(--stack-accent, var(--silver));
+}
+.stack-icon svg { width: 55%; height: auto; }
+.stack-grid li:nth-child(1) { --stack-accent: #ff4d73; }
+.stack-grid li:nth-child(2) { --stack-accent: #fb7185; }
+.stack-grid li:nth-child(3) { --stack-accent: #e8865f; }
+.stack-grid li:nth-child(4) { --stack-accent: #f0b849; }
+.stack-grid li:nth-child(5) { --stack-accent: #22d3ee; }
+.stack-arrow { color: var(--muted); }
+.stack-card:is(:hover, :focus-visible) .stack-arrow { color: var(--accent); }
+
 .gym {
   display: grid;
   grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
@@ -383,7 +427,7 @@ summary::marker { color: var(--accent); }
     border-radius: var(--pill);
   }
   .menu-ready .menu-toggle[aria-expanded="false"] + nav { display: none; }
-  .hero, .split, .gym, .skiros-intro, .skiros-flow-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero, .split, .gym, .skiros-intro, .skiros-flow-grid, .stack-grid { grid-template-columns: minmax(0, 1fr); }
   .hero { width: min(77rem, calc(100% - var(--gutter) * 2)); min-height: 0; padding-block: 1rem 2rem; }
   .portrait {
     grid-row: 1;
